@@ -65,12 +65,40 @@ ERROS listar(Tarefa tarefas[], int *pos){
 }
 
 ERROS salvar(Tarefa tarefas[], int *pos){
-    printf("Função de Salvar Tarefas\n");
+    FILE *f = fopen("tarefas.bin","wb");
+    if (f == NULL)
+        return ABRIR;
+
+    int qtd = fwrite(tarefas, TOTAL, sizeof(Tarefa), f);
+    if (qtd == 0 ) 
+        return ESCREVER;
+
+    qtd = fwrite(pos, 1, sizeof(int), f);
+    if (qtd == 0 ) 
+        return ESCREVER;
+
+    if(fclose(f))
+        return FECHAR;
+
     return OK;
 }
 
 ERROS carregar(Tarefa tarefas[], int *pos){
-    printf("Função de Carregar Tarefas\n");
+    FILE *f = fopen("tarefas.bin","rb");
+    if (f == NULL)
+        return ABRIR;
+
+    int qtd = fread(tarefas, TOTAL, sizeof(Tarefa), f);
+    if (qtd == 0 ) 
+        return LER;
+
+    qtd = fread(pos, 1, sizeof(int), f);
+    if (qtd == 0 ) 
+        return LER;
+
+    if(fclose(f))
+        return FECHAR;
+
     return OK;
 }
 

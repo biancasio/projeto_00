@@ -31,4 +31,6 @@ int main(){
             printf("Sair... \n");
 
     } while(opcao >= 0); //considera o 0 e sai do loop
+
+    fs[3](tarefas, &pos);
 }
