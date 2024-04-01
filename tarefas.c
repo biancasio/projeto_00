@@ -1,5 +1,6 @@
 // arquivo que eu posso compilar
 #include <stdio.h>
+#include <string.h>
 #include "tarefas.h"
 
 ERROS criar(Tarefa tarefas[], int *pos){
@@ -25,7 +26,26 @@ ERROS criar(Tarefa tarefas[], int *pos){
 }
 
 ERROS deletar(Tarefa tarefas[], int *pos){
-    printf("Função de Deletar Tarefas\n");
+    //testar se existem tarefas
+    if (*pos == 0)
+        return SEM_TAREFAS;
+    
+    //verificar se a tarefa escolhida existe
+    int pos_deletar;
+    printf("Entre com a Posição da Tarefa a ser Deletada: ");
+    scanf("%d", &pos_deletar);
+    pos_deletar --; //garantir a posição certa no array
+    if(pos_deletar >= *pos || pos_deletar <0)
+        return NAO_ENCONTRADO;
+
+    for (int i = pos_deletar; i< *pos; i++){
+        tarefas[i].prioridade = tarefas[i+1].prioridade;
+        strcpy(tarefas[i].categoria, tarefas[i+1].categoria);
+        strcpy(tarefas[i].descricao, tarefas[i+1].descricao);
+    }
+
+    *pos = *pos - 1;
+
     return OK;
 }
 
